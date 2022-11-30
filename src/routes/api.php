@@ -2,18 +2,23 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+use App\Http\Controllers\PostController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::get('/v1/books/list', function() {
+    $data = Post::select('book', 'author')->get();
+    return response()->json($data, 200);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/v1/books/by-id', function() {
+    $data = Post::select('id', 'book')->get();
+    return response()->json($data, 200);
+});
+
+Route::post('/v1/books/update', [PostController::class, 'upd']);
+
+Route::delete('/v1/books/id', [PostController::class, 'del']);
+
+Route::fallback(function () {
+    abort(404, 'API resource not found');
 });

@@ -1,18 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', [PostController::class, 'home']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/admin', [PostController::class, 'admin']);
+
+Route::delete('/delete/{id}', [PostController::class, 'delete']);
+
+Route::get('/createform', [PostController::class, 'createform']);
+
+Route::post('/create', [PostController::class, 'create']);
+
+Route::get('/updateform/{id}', [PostController::class, 'updateform']);
+
+Route::post('/update/{id}', [PostController::class, 'update']);
+
+Route::get('/countbooks', [PostController::class, 'countbooks']);
+
+Route::get('/showbooks', [PostController::class, 'showbooks']);
